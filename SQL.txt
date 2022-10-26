@@ -1,0 +1,91 @@
+#Задание 1
+#https://stepik.org/lesson/297508/step/8?unit=279268
+
+CREATE TABLE book(
+    book_id INT PRIMARY KEY AUTO_INCREMENT,
+    title VARCHAR(50),
+    author VARCHAR(30),
+    price DECIMAL(8, 2),
+    amount INT
+);
+
+
+# Задание 2
+# https://stepik.org/lesson/297508/step/9?unit=279268
+
+INSERT book (title, author, price, amount)
+VALUE ("Мастер и Маргарита", "Булгаков М.А.", 670.99, 3);
+INSERT book (title, author, price, amount)
+VALUE ("Белая гвардия", "Булгаков М.А.", 540.50, 5);
+INSERT book (title, author, price, amount)
+VALUE ("Идиот", "Достоевский Ф.М.", 460.00, 10);
+INSERT book (title, author, price, amount)
+VALUE ("Братья Карамазовы", "Достоевский Ф.М.", 799.01, 2);
+
+#Задание 2
+# https://stepik.org/lesson/297509/step/2?unit=279269
+SELECT * FROM book;
+
+# Задание 4
+# https://stepik.org/lesson/297509/step/3?unit=279269
+SELECT author, title, price FROM book;
+
+# Задание 5
+# https://stepik.org/lesson/297509/step/4?unit=279269
+SELECT title AS Название, author AS Автор FROM book;
+
+# Задание 6
+# https://stepik.org/lesson/297509/step/5?unit=279269
+SELECT title, amount, amount * 1.65 AS pack FROM book;
+
+# Задание 7
+# https://stepik.org/lesson/297509/step/6?unit=279269
+SELECT title, author, amount, ROUND(price-(price/100*30), 2) AS new_price FROM book;
+
+# задание 8
+# https://stepik.org/lesson/297509/step/7?unit=279269
+SELECT author, title,
+  ROUND(IF (author='Булгаков М.А.', price*1.1, IF(author='Есенин С.А.', price*1.05, price)), 2)
+  AS new_price FROM book;
+
+# Задание 9
+# https://stepik.org/lesson/297509/step/8?unit=279269
+SELECT author, title, price
+FROM book
+WHERE amount < 10;
+
+
+# Задание 10.
+# Вывести название, автора,  цену  и количество всех книг, цена которых меньше 500 или больше 600,
+# а стоимость всех экземпляров этих книг больше или равна 5000.
+#  Результат:
+# +-----------------------+-------------+--------+--------+
+# | title                 | author      | price  | amount |
+# +-----------------------+-------------+--------+--------+
+# | Стихотворения и поэмы | Есенин С.А. | 650.00 | 15     |
+# +-----------------------+-------------+--------+--------+
+#
+Решение:
+SELECT title, author, price, amount
+FROM book
+WHERE (price < 500 OR price > 600) AND amount * price > 5000;
+
+
+
+Задание 11.
+Вывести название и авторов тех книг, цены которых принадлежат интервалу от 540.50 до 800 (включая границы),  а количество или 2, или 3, или 5, или 7 .
+
+Результат:
+
++--------------------+------------------+
+| title              | author           |
++--------------------+------------------+
+| Мастер и Маргарита | Булгаков М.А.    |
+| Белая гвардия      | Булгаков М.А.    |
+| Братья Карамазовы  | Достоевский Ф.М. |
++--------------------+------------------+
+
+Решение:
+SELECT title, author
+FROM book
+WHERE price BETWEEN 540.50 AND 800 AND amount in (2, 3, 5, 7);
